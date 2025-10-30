@@ -1,0 +1,7 @@
+pandas==2.2.2           # CSV loading, joins, and basic transforms
+numpy==1.26.4           # numeric helpers if needed in planning
+python-dateutil==2.9.0.post0  # robust date parsing
+streamlit==1.38.0       # quick UI demo for the trial
+openai==1.47.0          # optional: for the “Carlos, your balance...” LLM message
+gspread==6.1.4          # optional: export plan/forecast to Google Sheets
+oauth2client==4.1.3     # optional: auth support for Google APIs

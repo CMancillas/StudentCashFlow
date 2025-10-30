@@ -1,0 +1,4 @@
+Subject: Electricity bill
+Amount: 1200
+Due date: 2025-11-13
+Concept: Electricity (CFE)
