@@ -1,0 +1,18 @@
+id,date,description,amount,source,due_date,category,is_recurring,periodicity,priority
+1,2025-11-01,Monthly income,6000.0,bank_csv:bank_demo_nov.csv,,income,True,monthly,0
+2,2025-11-01,Housing rent,-1500.0,bank_csv:bank_demo_nov.csv,,housing_rent,True,monthly,1
+3,2025-11-02,Gym membership,-600.0,bank_csv:bank_demo_nov.csv,,subscription,True,monthly,4
+4,2025-11-02,Gym membership,-600.0,email:gym_membership_2025-11-02.txt,2025-11-02,subscription,True,monthly,4
+5,2025-11-03,Spotify subscription,-129.0,bank_csv:bank_demo_nov.csv,,subscription,True,monthly,4
+6,2025-11-03,Groceries at supermarket,-820.5,bank_csv:bank_demo_nov.csv,,food,False,,3
+7,2025-11-04,Freelance income,2000.0,bank_csv:bank_demo_nov.csv,,income,False,,0
+8,2025-11-05,Campus cafeteria,-120.0,bank_csv:bank_demo_nov.csv,,food,False,,3
+9,2025-11-06,Netflix subscription,-219.0,bank_csv:bank_demo_nov.csv,,subscription,True,monthly,4
+10,2025-11-07,Phone bill,-350.0,bank_csv:bank_demo_nov.csv,,utilities,True,monthly,2
+11,2025-11-08,Uber rides,-180.0,bank_csv:bank_demo_nov.csv,,transport,False,,3
+12,2025-11-10,Book purchase,-450.0,bank_csv:bank_demo_nov.csv,,other,False,,5
+13,2025-11-12,Extra tutoring income,900.0,bank_csv:bank_demo_nov.csv,,income,False,,0
+14,2025-11-13,Electricity Bill,-1200.0,bank_csv:bank_demo_nov.csv,,utilities,True,monthly,2
+15,2025-11-13,Electricity (CFE),-1200.0,email:electricity_bill_2025-11-13.txt,2025-11-13,utilities,True,monthly,2
+16,2025-11-14,Water Bill,-300.0,bank_csv:bank_demo_nov.csv,,utilities,True,monthly,2
+17,2025-11-15,Internet Bill,-389.0,bank_csv:bank_demo_nov.csv,,utilities,True,monthly,2
