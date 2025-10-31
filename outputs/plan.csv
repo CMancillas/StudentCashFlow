@@ -1,0 +1,17 @@
+pay_on,description,amount,category,priority,balance_after,status,reason
+2025-11-01,Monthly income,6000.0,income,0,11000.0,applied,income
+2025-11-04,Freelance income,2000.0,income,0,13000.0,applied,income
+2025-11-12,Extra tutoring income,900.0,income,0,13900.0,applied,income
+2025-11-01,Housing rent,-1500.0,housing_rent,1,12400.0,scheduled,within_buffer
+2025-11-07,Phone bill,-350.0,utilities,2,12050.0,scheduled,within_buffer
+2025-11-13,Electricity Bill,-1200.0,utilities,2,10850.0,scheduled,within_buffer
+2025-11-13,Electricity (CFE),-1200.0,utilities,2,9650.0,scheduled,within_buffer
+2025-11-14,Water Bill,-300.0,utilities,2,9350.0,scheduled,within_buffer
+2025-11-03,Groceries at supermarket,-820.5,food,3,8529.5,scheduled,within_buffer
+2025-11-05,Campus cafeteria,-120.0,food,3,8409.5,scheduled,within_buffer
+2025-11-08,Uber rides,-180.0,transport,3,8229.5,scheduled,within_buffer
+2025-11-02,Gym membership,-600.0,subscription,4,7629.5,scheduled,within_buffer
+2025-11-02,Gym membership,-600.0,subscription,4,7029.5,scheduled,within_buffer
+2025-11-03,Spotify subscription,-129.0,subscription,4,6900.5,scheduled,within_buffer
+2025-11-06,Netflix subscription,-219.0,subscription,4,6681.5,scheduled,within_buffer
+2025-11-10,Book purchase,-450.0,other,5,6231.5,scheduled,within_buffer

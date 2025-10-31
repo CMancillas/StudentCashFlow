@@ -1,26 +1,28 @@
 """
 cli.py
 ------
-Tiny command-line entrypoint for the project.
+Simple CLI for the Student Cashflow Agent.
 
-Right now it only supports:
+Commands:
     python cli.py ingest
+        -> load (ingest) + classify + save to outputs/normalized_transactions.csv
 
-What it does:
-1. loads all transactions (CSV + email) from app.ingest
-2. classifies them (app.classify)
-3. adds an incremental id
-4. saves to outputs/normalized_transactions.csv
+    python cli.py plan --start-balance 5000 --horizon 14 --min-buffer 1000
+        -> load + classify + run planner + save:
+            outputs/forecast.csv
+            outputs/plan.csv
 """
 
 from __future__ import annotations
 import sys
 from pathlib import Path
+from typing import List
 
 import pandas as pd
 
 from app.ingest import load_all_transactions
 from app.classify import classify_transactions
+from app.planner import build_forecast_and_plan
 
 def cmd_ingest() -> None:
     """Load, classify and save the normalized transactions."""
@@ -44,18 +46,76 @@ def cmd_ingest() -> None:
 
     print(f"[ok] wrote {len(df_cls)} rows to {out_path}")
 
+def cmd_plan(args: List[str]) -> None:
+    """
+    Run forecast + payment plan and save both CSVs.
+    args is the list that comes after 'plan'
+    e.g. ['--start-balance', '5000', '--horizon', '14', '--min-buffer', '1000']
+    """
+   
+    # default values
+    start_balance: float = 5000.0
+    horizon: int = 14
+    min_buffer: float = 1000.0
+
+    # very small arg parser (no need for argparse yet)
+    i = 0
+    while i < len(args):
+        if args[i] == "--start-balance" and i + 1 < len(args):
+            start_balance = float(args[i + 1])
+            i += 2
+        elif args[i] == "--horizon" and i + 1 < len(args):
+            horizon = int(args[i + 1])
+            i += 2
+        elif args[i] == "--min-buffer" and i + 1 < len(args):
+            min_buffer = float(args[i + 1])
+            i += 2
+        else:
+            print(f"Unknown option: {args[i]}")
+            sys.exit(1)
+    
+
+    # 1) load + classify
+    df_raw: pd.DataFrame = load_all_transactions()
+    df_cls: pd.DataFrame = classify_transactions(df_raw)
+
+    # 2) build forecast + plan
+    forecast_df, plan_df = build_forecast_and_plan(
+        df_cls,
+        start_balance=start_balance,
+        horizon_days=horizon,
+        min_buffer=min_buffer,
+    )
+
+    # 3) save
+    out_dir: Path = Path("outputs")
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    forecast_path: Path = out_dir / "forecast.csv"
+    plan_path: Path = out_dir / "plan.csv"
+
+    forecast_df.to_csv(forecast_path, index=False)
+    plan_df.to_csv(plan_path, index=False)
+
+    print(f"[ok] forecast saved to {forecast_path}")
+    print(f"[ok] plan saved to {plan_path}")
+
 def main() -> None:
     """Very small CLI dispatcher."""
     if len(sys.argv) < 2:
-        print("Usage: python cli.py <command>")
+        print("Usage: python cli.py <command> [options]")
         print("Commands:")
         print(" ingest  Load + classify + save to outputs/")
+        print("  plan --start-balance 5000 --horizon 14 --min-buffer 1000")
         sys.exit(1)
     
     cmd: str = sys.argv[1]
+    args: List[str] = sys.argv[2:]
 
     if cmd == "ingest":
         cmd_ingest()
+    elif cmd == "plan":
+        cmd_plan(args)
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)
