@@ -1,0 +1,10 @@
+=== Student Cashflow Summary (no-AI) === 
+Start balance: $5,000.00 MXN | Min buffer: $1,000.00 MXN
+Projected balance at horizon end: $2,542.50 MXN
+Lowest projected balance: $2,542.50 MXN
+
+--- Payments plan ---
+Scheduled payments total: $-5,357.50 MXN
+Next scheduled payment date: 2025-11-03
+
+Suggestion: keep subscriptions last; prioritize rent/tuition/utilities first.
