@@ -6,9 +6,7 @@ pay_on,description,amount,category,priority,balance_after,status,reason
 2025-11-13,Electricity (CFE),-1200.0,utilities,2,5150.0,scheduled,within_buffer
 2025-11-14,Water Bill,-300.0,utilities,2,4850.0,scheduled,within_buffer
 2025-11-15,Internet Bill,-389.0,utilities,2,4461.0,scheduled,within_buffer
-2025-11-03,Groceries at supermarket,-820.5,food,3,3640.5,scheduled,within_buffer
-2025-11-05,Campus cafeteria,-120.0,food,3,3520.5,scheduled,within_buffer
-2025-11-08,Uber rides,-180.0,transport,3,3340.5,scheduled,within_buffer
-2025-11-03,Spotify subscription,-129.0,subscription,4,3211.5,scheduled,within_buffer
-2025-11-06,Netflix subscription,-219.0,subscription,4,2992.5,scheduled,within_buffer
-2025-11-10,Book purchase,-450.0,other,5,2542.5,scheduled,within_buffer
+2025-11-05,Campus cafeteria,-120.0,food,3,4341.0,scheduled,within_buffer
+2025-11-08,Uber rides,-180.0,transport,3,4161.0,scheduled,within_buffer
+2025-11-06,Netflix subscription,-219.0,subscription,4,3942.0,scheduled,within_buffer
+2025-11-10,Book purchase,-450.0,other,5,3492.0,scheduled,within_buffer

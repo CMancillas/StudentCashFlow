@@ -21,6 +21,8 @@ import streamlit as st
 from app.ingest import load_all_transactions
 from app.classify import classify_transactions
 from app.planner import build_forecast_and_plan
+from app.summarize_llm import generate_ai_summary
+from app.summarize import generate_summary as generate_deterministic_summary
 
 st.set_page_config(page_title="Student Cashflow Agent", layout="wide")
 
@@ -35,6 +37,7 @@ min_buffer: float = st.sidebar.number_input("Min buffer (MXN)", value=1000.0, st
 st.sidebar.markdown("---")
 load_btn = st.sidebar.button("Load & Normalize")
 plan_btn = st.sidebar.button("Plan")
+ai_btn = st.sidebar.button("AI Summary")
 
 # ---- Placeholders
 norm_ph = st.container()
@@ -104,3 +107,38 @@ if plan_btn:
     
     except Exception as e:
         st.error(f"Error while planning: {e}")
+
+# ---- AI Summary
+if ai_btn:
+    try:
+        # Ensure we have df_cls, forecast_df, plan_df
+        try:
+            df_cls # type: ignore[name-defined]
+        except NameError:
+            df_raw: pd.DataFrame = load_all_transactions()
+            df_cls: pd.DataFrame = classify_transactions(df_raw)
+            df_cls = df_cls.reset_index(drop=True)
+        
+        try:
+            forecast_df # type: ignore[name-defined]
+            plan_df # type: ignore[name-defined]
+        except NameError:
+            forecast_df, plan_df = build_forecast_and_plan(
+                df_cls,
+                start_balance=start_balance,
+                horizon_days=horizon_days,
+                min_buffer=min_buffer,
+            )
+        
+        st.subheader("AI Summary")
+        text = generate_ai_summary(
+            forecast_df, plan_df, start_balance=start_balance, min_buffer=min_buffer
+        )
+        st.write(text)
+
+        # Also show deterministic as a collapsible fallback reference
+        with st.expander("Deterministic summary (fallback)"):
+            st.code(generate_deterministic_summary(forecast_df, plan_df, start_balance, min_buffer))
+        
+    except Exception as e:
+        st.error(f"Error while generating AI summary: {e}")

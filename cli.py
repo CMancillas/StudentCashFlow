@@ -24,6 +24,7 @@ from app.ingest import load_all_transactions
 from app.classify import classify_transactions
 from app.planner import build_forecast_and_plan
 from app.summarize import generate_summary
+from app.summarize_llm import generate_ai_summary
 
 def cmd_ingest() -> None:
     """Load, classify and save the normalized transactions."""
@@ -144,6 +145,49 @@ def cmd_summarize(args: list[str]) -> None:
     print(summary_text)
     print(f"\n[ok] summary saved to {summary_path}")
 
+def cmd_summarize_llm(args: list[str]) -> None:
+    # defaults
+    start_balance: float = 5000.0
+    horizon: int = 14
+    min_buffer: float = 1000.0
+
+    # tiny arg parser
+    i = 0 
+    while i < len(args):
+        if args[i] == "--start-balance" and i + 1 < len(args):
+            start_balance = float(args[i + 1]); i += 2
+        elif args[i] == "--horizon" and i + 1 < len(args):
+            horizon = int(args[i + 1]); i += 2
+        elif args[i] == "--min-buffer" and i + 1 < len(args):
+            min_buffer = float(args[i + 1]); i += 2
+        else:
+            print(f"Unknown option: {args[i]}"); sys.exit(1)
+
+    # load + classify
+    df_raw: pd.DataFrame = load_all_transactions()
+    df_cls: pd.DataFrame = classify_transactions(df_raw)
+
+    # forecast & plan 
+    forecast_df, plan_df = build_forecast_and_plan(
+        df_cls,
+        start_balance=start_balance,
+        horizon_days=horizon,
+        min_buffer=min_buffer,
+    )
+
+    # AI summary (with fallback)
+    text = generate_ai_summary(
+        forecast_df, plan_df, start_balance=start_balance, min_buffer=min_buffer
+    )
+
+    out_dir = Path("outputs"); out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir/ "summary_ai.txt"
+    out_path.write_text(text, encoding="utf-8")
+
+    print(text)
+    print(f"\n[ok] AI summary saved to {out_path}")
+
+
 def main() -> None:
     """Very small CLI dispatcher."""
     if len(sys.argv) < 2:
@@ -152,6 +196,7 @@ def main() -> None:
         print(" ingest  Load + classify + save to outputs/")
         print("  plan --start-balance 5000 --horizon 14 --min-buffer 1000")
         print("  summarize --start-balance 5000 --horizon 14 --min-buffer 1000")
+        print("  summarize-llm --start-balance 5000 --horizon 14 --min-buffer 1000")
         sys.exit(1)
     
     cmd: str = sys.argv[1]
@@ -163,6 +208,8 @@ def main() -> None:
         cmd_plan(args)
     elif cmd == "summarize":
         cmd_summarize(args)
+    elif cmd == "summarize-llm":
+        cmd_summarize_llm(args)
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)
