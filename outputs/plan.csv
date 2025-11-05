@@ -1,12 +1,11 @@
 pay_on,description,amount,category,priority,balance_after,status,reason
-2025-11-04,Freelance income,2000.0,income,0,7000.0,applied,income
-2025-11-12,Extra tutoring income,900.0,income,0,7900.0,applied,income
-2025-11-07,Phone bill,-350.0,utilities,2,7550.0,scheduled,within_buffer
-2025-11-13,Electricity Bill,-1200.0,utilities,2,6350.0,scheduled,within_buffer
-2025-11-13,Electricity (CFE),-1200.0,utilities,2,5150.0,scheduled,within_buffer
-2025-11-14,Water Bill,-300.0,utilities,2,4850.0,scheduled,within_buffer
-2025-11-15,Internet Bill,-389.0,utilities,2,4461.0,scheduled,within_buffer
-2025-11-05,Campus cafeteria,-120.0,food,3,4341.0,scheduled,within_buffer
-2025-11-08,Uber rides,-180.0,transport,3,4161.0,scheduled,within_buffer
-2025-11-06,Netflix subscription,-219.0,subscription,4,3942.0,scheduled,within_buffer
-2025-11-10,Book purchase,-450.0,other,5,3492.0,scheduled,within_buffer
+2025-11-12,Extra tutoring income,900.0,income,0,5900.0,applied,income
+2025-11-07,Phone bill,-350.0,utilities,2,5550.0,scheduled,within_buffer
+2025-11-13,Electricity Bill,-1200.0,utilities,2,4350.0,scheduled,within_buffer
+2025-11-13,Electricity (CFE),-1200.0,utilities,2,3150.0,scheduled,within_buffer
+2025-11-14,Water Bill,-300.0,utilities,2,2850.0,scheduled,within_buffer
+2025-11-15,Internet Bill,-389.0,utilities,2,2461.0,scheduled,within_buffer
+2025-11-05,Campus cafeteria,-120.0,food,3,2341.0,scheduled,within_buffer
+2025-11-08,Uber rides,-180.0,transport,3,2161.0,scheduled,within_buffer
+2025-11-06,Netflix subscription,-219.0,subscription,4,1942.0,scheduled,within_buffer
+2025-11-10,Book purchase,-450.0,other,5,1492.0,scheduled,within_buffer

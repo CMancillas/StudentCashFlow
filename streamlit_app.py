@@ -25,6 +25,7 @@ from app.planner import build_forecast_and_plan
 from app.summarize_llm import generate_ai_summary
 from app.summarize import generate_summary as generate_deterministic_summary
 from app.payment_automation import automate_payments_with_model
+from app.ingest_csv import load_transactions_from_csv
 
 st.set_page_config(page_title="Student Cashflow Agent", layout="wide")
 
@@ -35,6 +36,8 @@ st.sidebar.header("Inputs")
 start_balance: float = st.sidebar.number_input("Start balance (MXN)", value=5000.0, step=100.0)
 horizon_days: int = st.sidebar.number_input("Horizon (days)", value=14, min_value=1, max_value=60, step=1)
 min_buffer: float = st.sidebar.number_input("Min buffer (MXN)", value=1000.0, step=100.0)
+uploaded_csv = st.sidebar.file_uploader("Upload transactions CSV", type=["csv"])
+use_uploaded_csv = st.sidebar.checkbox("Use uploaded CSV (instead of auto-ingest)", value=False)
 
 st.sidebar.markdown("---")
 load_btn = st.sidebar.button("Load & Normalize")
@@ -49,7 +52,12 @@ plan_ph = st.container()
 # ---- Load & Normalize
 if load_btn:
     try:
-        df_raw: pd.DataFrame = load_all_transactions()
+        if use_uploaded_csv and uploaded_csv is not None:
+             df_raw = load_transactions_from_csv(uploaded_csv)
+        else:
+            df_raw = load_all_transactions()
+
+        #df_raw: pd.DataFrame = load_all_transactions()
         df_cls: pd.DataFrame = classify_transactions(df_raw)
         df_cls = df_cls.reset_index(drop=True)
         df_cls.insert(0, "id", range(1, len(df_cls) + 1))

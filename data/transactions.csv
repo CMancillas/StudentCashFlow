@@ -1,0 +1,17 @@
+type,description,amount,date,priority
+income,Student Salary,9000,2025-11-01,0
+expense,Transport (Car Gas) #1,-1000,2025-11-01,1
+expense,Groceries #1,-700,2025-11-03,1
+expense,Internet Bill,-389,2025-11-03,2
+expense,House System Alarm,-260,2025-11-05,2
+expense,Netflix Subscription,-150,2025-11-09,3
+expense,Groceries #2,-700,2025-11-10,1
+expense,Gym Membership,-600,2025-11-11,2
+expense,Water Bill,-120,2025-11-14,1
+expense,Transport (Car Gas) #2,-1000,2025-11-15,1
+income,Freelance Job,2000,2025-11-16,0
+expense,Groceries #3,-700,2025-11-17,1
+expense,Electric Bill,-650,2025-11-19,1
+expense,Groceries #4,-700,2025-11-24,1
+expense,Apple Music,-120,2025-11-27,3
+expense,Apple Theft and Loss Coverage,-100,2025-11-29,3
