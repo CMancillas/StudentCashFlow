@@ -123,9 +123,9 @@ def classify_transactions(df: pd.DataFrame) -> pd.DataFrame:
     - is_recurring
     - periodicity
     - priority
+    - pay_on (if not already present)
     """
-
-    # we make a copy so we don't mutate in place (safer)
+    # We make a copy to avoid mutating in place (safer)
     out = df.copy()
 
     out["category"] = [
@@ -142,7 +142,18 @@ def classify_transactions(df: pd.DataFrame) -> pd.DataFrame:
 
     out["priority"] = [assign_priority(cat) for cat in out["category"]]
 
+    # Check if 'pay_on' exists. If not, create it from 'date' or use a default date.
+    if 'pay_on' not in out.columns:
+        if 'date' in out.columns:
+            out['pay_on'] = pd.to_datetime(out['date'], errors='coerce')  # Use the 'date' column if available
+        else:
+            out['pay_on'] = pd.to_datetime('2025-11-04')  # Default date if no date exists
+
+    # Make sure 'pay_on' is in a proper datetime format
+    out['pay_on'] = pd.to_datetime(out['pay_on'], errors='coerce')
+
     return out
+
 
 if __name__ == "__main__":
     # quick local test:

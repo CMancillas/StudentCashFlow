@@ -66,7 +66,6 @@ def _compute_stats(
         "postponed_preview": pos_preview,
     }
 
-
 def generate_ai_summary(
     forecast_df: pd.DataFrame,
     plan_df: pd.DataFrame,
@@ -82,13 +81,14 @@ def generate_ai_summary(
 
     api_key = os.getenv("OPENROUTER_API_KEY")
     if not api_key:
-        print("⚠️ No OPENROUTER_API_KEY found — using fallback summary.")
+        print("No OPENROUTER_API_KEY found — using fallback summary.")
         return generate_deterministic_summary(forecast_df, plan_df, start_balance, min_buffer)
 
     # Build the context prompt
     prompt = f"""
 You are a friendly and wise financial assistant for university students. 
 Your task is to summarize their projected financial situation in clear, encouraging language.
+You should also make **specific recommendations** based on the student's financial data.
 
 Context (amounts in MXN):
 - Start balance: {_fmt_mxn(stats['start_balance'])}
@@ -106,10 +106,16 @@ Top scheduled payments:
 Top postponed payments:
 - {(chr(10) + '- ').join(stats['postponed_preview']) if stats['postponed_preview'] else 'none'}
 
-Write a short, clear, and motivating summary. 
-Offer practical, kind advice for managing money wisely.
-Start your response with:
-"Here’s your financial summary:"
+### Instructions:
+1. **Suggestions**: Based on the financial situation, provide **specific recommendations** to improve their cash flow.
+    - Should the student postpone any payments?
+    - Should they divide any payments to stay above buffer?
+    - Can they save or cut back on any expenses?
+    - You can suggest **prioritizing certain payments** (like rent/tuition) and **postponing others** (like subscriptions or non-essential purchases).
+
+2. Make the recommendations **actionable**, **clear**, and **encouraging**.
+
+3. Start your response with: "Here’s your financial summary:".
 """
 
     try:
@@ -123,16 +129,16 @@ Start your response with:
             messages=[
                 {
                     "role": "system",
-                    "content": "You generate friendly, motivating, and practical financial summaries for students.",
+                    "content": "You generate friendly, motivating, and practical financial summaries for students, including actionable recommendations.",
                 },
                 {"role": "user", "content": prompt},
             ],
             max_tokens=350,
-            temperature=0.7,
+            temperature=0.75,  # Allow more creativity in suggestions
         )
 
         return response.choices[0].message.content.strip()
 
     except Exception as e:
-        print(f"⚠️ Error generating AI summary: {e}")
+        print(f"Error generating AI summary: {e}")
         return generate_deterministic_summary(forecast_df, plan_df, start_balance, min_buffer)

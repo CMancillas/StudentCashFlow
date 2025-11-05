@@ -1,12 +1,28 @@
 Here's your financial summary:
 
-Good news! Your finances are looking stable for now. Starting with $5,000 MXN, you'll end up with $3,492 MXN after all bills are paid, which keeps you well above your minimum buffer of $1,000 MXN. Your main expenses are utilities, with electricity being the largest bill at $1,200 MXN.
+Good news! Your finances are looking stable for now. Starting with $5,000 MXN, you'll end with $3,492 MXN after all payments, which keeps you well above your minimum buffer of $1,000 MXN. 🌟
 
-📝 Quick Tips:
-- I notice you have two electricity entries for the same amount. Double-check if this might be a duplicate to avoid overpaying
-- Consider setting up payment reminders for your bills since they're all due within a 10-day period
-- You're doing great maintaining a safety buffer! Keep it up 👍
+I notice a few things about your upcoming bills:
+1. You have two identical electricity bills ($1,200 MXN each) scheduled for the same day (Nov 13). This might be a duplicate entry you'll want to check! 🔍
 
-Looking ahead, you might want to explore ways to reduce your electricity usage since it's your biggest expense. Simple habits like unplugging devices when not in use and using natural light during the day can make a difference in your bill.
+Here are my specific recommendations:
 
-Remember: Every peso saved is a peso earned! You're already showing good financial habits by keeping track of your expenses. Keep up the great work! 🌟
+1. **Check for Duplicates:**
+   * Verify if the two electricity bills (CFE) are actually duplicates. If so, removing one would save you $1,200 MXN! 
+
+2. **Bill Management:**
+   * Your utility bills (electricity, water, internet) are all clustered between Nov 13-15
+   * Consider calling your providers to spread these payment dates throughout the month
+   * This would give you better cash flow management
+
+3. **Savings Opportunities:**
+   * Your phone bill ($350 MXN) seems reasonable, but you could:
+     - Check if your carrier offers student discounts
+     - Compare with other carriers' plans
+   * For electricity ($1,200 MXN), try:
+     - Using natural light during day
+     - Unplugging devices when not in use
+     - Using fans instead of AC when possible
+
+4. **Future Planning:**
+   * Consider setting aside about $3,500 MXN
