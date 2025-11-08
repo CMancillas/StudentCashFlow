@@ -1,0 +1,108 @@
+type,description,amount,date,priority
+income,Student Salary,7800,2025-06-01,0
+expense,Rent,-4000,2025-06-01,1
+expense,Groceries,-820,2025-06-01,2
+expense,Internet Bill,-389,2025-06-02,2
+expense,Phone Plan,-320,2025-06-02,3
+expense,Coffee,-85,2025-06-03,4
+income,Freelance Project,2600,2025-06-03,2
+expense,Streaming Subscription,-130,2025-06-03,3
+expense,Transport (Metro),-180,2025-06-04,3
+expense,Books,-420,2025-06-04,2
+income,Scholarship,5000,2025-06-05,1
+expense,Lunch with Friends,-260,2025-06-05,4
+expense,Electricity Bill,-350,2025-06-06,2
+expense,Groceries,-900,2025-06-06,2
+expense,Party,-520,2025-06-07,4
+expense,Clothes,-700,2025-06-07,3
+expense,Transport (Bus Card),-210,2025-06-08,3
+expense,Snacks,-95,2025-06-08,4
+expense,Streaming Music,-120,2025-06-09,3
+expense,Restaurant,-340,2025-06-09,3
+income,Side Job,2000,2025-06-10,2
+expense,Laundry,-140,2025-06-10,3
+expense,Groceries,-880,2025-06-11,2
+expense,Weekend Trip,-700,2025-06-11,4
+expense,Fast Food,-180,2025-06-12,4
+income,Parent Support,3000,2025-06-12,1
+expense,House Supplies,-280,2025-06-13,3
+expense,Medicine,-260,2025-06-13,2
+expense,Transport,-190,2025-06-14,3
+expense,Cinema,-200,2025-06-14,4
+income,App Testing,900,2025-06-15,3
+expense,Groceries,-760,2025-06-15,2
+expense,Phone Accessories,-350,2025-06-16,3
+expense,Internet Bill,-389,2025-06-16,2
+expense,Electricity Bill,-350,2025-06-17,2
+income,Freelance Design,2800,2025-06-17,1
+expense,Snacks,-100,2025-06-18,4
+expense,Coffee,-80,2025-06-18,4
+expense,Streaming Subscription,-130,2025-06-19,3
+expense,Groceries,-840,2025-06-19,2
+expense,Party,-480,2025-06-19,4
+expense,Transport,-200,2025-06-20,3
+expense,Books,-460,2025-06-20,2
+income,Part-time Tutor,2300,2025-06-21,1
+expense,Restaurant,-310,2025-06-21,3
+expense,Laundry,-130,2025-06-22,3
+expense,Groceries,-900,2025-06-22,2
+expense,Fast Food,-190,2025-06-23,4
+expense,Electricity Bill,-360,2025-06-23,2
+income,Freelance Project,2400,2025-06-24,2
+expense,Phone Plan,-320,2025-06-24,3
+expense,Transport (Metro),-190,2025-06-24,3
+expense,Groceries,-740,2025-06-25,2
+income,Survey Reward,600,2025-06-25,3
+expense,Spotify Subscription,-120,2025-06-25,3
+expense,Snacks,-90,2025-06-26,4
+expense,Fast Food,-180,2025-06-26,4
+expense,Clothes,-780,2025-06-26,3
+expense,Streaming Service,-130,2025-06-27,3
+expense,Groceries,-890,2025-06-27,2
+income,Research Assistant,2500,2025-06-27,1
+expense,Books,-400,2025-06-27,2
+expense,Coffee,-95,2025-06-28,4
+expense,Party,-550,2025-06-28,4
+expense,Internet Bill,-389,2025-06-28,2
+expense,Electricity Bill,-340,2025-06-29,2
+expense,Transport,-210,2025-06-29,3
+expense,House Supplies,-290,2025-06-29,3
+income,Parent Support,3100,2025-06-30,1
+expense,Lunch,-260,2025-06-30,3
+expense,Snacks,-90,2025-06-30,4
+expense,Groceries,-770,2025-06-30,2
+expense,Netflix,-150,2025-06-30,3
+expense,Fast Food,-180,2025-06-30,4
+income,Freelance Web Design,2600,2025-06-30,1
+expense,Restaurant,-300,2025-06-30,3
+expense,Transport,-200,2025-06-30,3
+expense,Coffee,-80,2025-06-30,4
+expense,Clothes,-830,2025-06-30,3
+expense,Streaming Music,-120,2025-06-30,3
+income,Scholarship Bonus,1200,2025-06-30,1
+expense,Books,-420,2025-06-30,2
+expense,Snacks,-95,2025-06-30,4
+expense,Electricity Bill,-350,2025-06-30,2
+expense,Phone Plan,-320,2025-06-30,3
+expense,Groceries,-810,2025-06-30,2
+income,Part-time Job,1500,2025-06-15,2
+income,Part-time Job,1500,2025-06-08,2
+expense,Concert Ticket,-600,2025-06-13,4
+expense,Photocopying,-90,2025-06-05,3
+income,Market Sale,700,2025-06-10,3
+expense,Library Fine,-60,2025-06-12,3
+expense,Car Gas,-550,2025-06-18,2
+income,Gift,300,2025-06-20,4
+expense,Exam Fee,-200,2025-06-02,2
+expense,Study Materials,-420,2025-06-11,2
+income,One-off Gig,1800,2025-06-07,2
+expense,Campus Event,-150,2025-06-16,4
+expense,Snack Stand,-45,2025-06-19,4
+income,Referral Bonus,400,2025-06-21,3
+expense,Stationery,-70,2025-06-04,3
+expense,Bus Ticket,-30,2025-06-06,4
+expense,Donation,-100,2025-06-17,4
+expense,Parking,-80,2025-06-14,3
+expense,Printer Ink,-120,2025-06-09,3
+income,App Reward,200,2025-06-26,4
+expense,Snack Stand,-55,2025-06-02,4

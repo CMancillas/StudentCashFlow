@@ -1,0 +1,87 @@
+type,description,amount,date,priority
+income,Student Salary,7800,2025-04-01,0
+expense,Rent,-4000,2025-04-01,1
+expense,Groceries,-950,2025-04-02,2
+expense,Internet Bill,-389,2025-04-03,2
+expense,Phone Plan,-320,2025-04-03,3
+expense,Coffee,-85,2025-04-04,4
+income,Freelance Project,2700,2025-04-05,1
+expense,Streaming Subscription,-130,2025-04-05,3
+expense,Transport (Metro),-180,2025-04-06,3
+expense,Books,-480,2025-04-06,2
+income,Scholarship,5000,2025-04-07,1
+expense,Lunch with Friends,-280,2025-04-07,4
+expense,Electricity Bill,-360,2025-04-08,2
+expense,Groceries,-890,2025-04-08,2
+expense,Party,-550,2025-04-09,4
+expense,Clothes,-740,2025-04-10,3
+expense,Transport (Bus Card),-210,2025-04-10,3
+expense,Snacks,-95,2025-04-11,4
+expense,Streaming Music,-120,2025-04-12,3
+expense,Restaurant,-340,2025-04-13,3
+income,Side Job,2100,2025-04-13,2
+expense,Laundry,-140,2025-04-14,3
+expense,Groceries,-910,2025-04-15,2
+expense,Weekend Trip,-650,2025-04-15,4
+expense,Fast Food,-190,2025-04-16,4
+income,Parent Support,3100,2025-04-16,1
+expense,House Supplies,-280,2025-04-17,3
+expense,Medicine,-260,2025-04-17,2
+expense,Transport,-190,2025-04-18,3
+expense,Cinema,-210,2025-04-18,4
+income,App Testing,950,2025-04-19,3
+expense,Groceries,-780,2025-04-20,2
+expense,Phone Accessories,-350,2025-04-20,3
+expense,Internet Bill,-389,2025-04-21,2
+expense,Electricity Bill,-350,2025-04-21,2
+income,Freelance Design,2800,2025-04-22,1
+expense,Snacks,-100,2025-04-22,4
+expense,Coffee,-80,2025-04-23,4
+expense,Streaming Subscription,-130,2025-04-23,3
+expense,Groceries,-850,2025-04-24,2
+expense,Party,-500,2025-04-24,4
+expense,Transport,-200,2025-04-25,3
+expense,Books,-460,2025-04-25,2
+income,Part-time Tutor,2300,2025-04-26,1
+expense,Restaurant,-310,2025-04-26,3
+expense,Laundry,-130,2025-04-27,3
+expense,Groceries,-900,2025-04-27,2
+expense,Fast Food,-190,2025-04-28,4
+expense,Electricity Bill,-360,2025-04-28,2
+income,Freelance Project,2200,2025-04-28,1
+expense,Phone Plan,-320,2025-04-28,3
+expense,Transport (Metro),-190,2025-04-28,3
+expense,Groceries,-760,2025-04-28,2
+income,Survey Reward,650,2025-04-28,3
+expense,Spotify Subscription,-120,2025-04-28,3
+expense,Snacks,-90,2025-04-28,4
+expense,Fast Food,-180,2025-04-28,4
+expense,Clothes,-800,2025-04-28,3
+expense,Streaming Service,-130,2025-04-28,3
+expense,Groceries,-890,2025-04-28,2
+income,Research Assistant,2500,2025-04-28,1
+expense,Books,-400,2025-04-28,2
+expense,Coffee,-95,2025-04-28,4
+expense,Party,-580,2025-04-28,4
+expense,Internet Bill,-389,2025-04-28,2
+expense,Electricity Bill,-340,2025-04-28,2
+expense,Transport,-210,2025-04-28,3
+expense,House Supplies,-290,2025-04-28,3
+income,Parent Support,3100,2025-04-28,1
+expense,Lunch,-260,2025-04-28,3
+expense,Snacks,-90,2025-04-28,4
+expense,Groceries,-770,2025-04-28,2
+expense,Netflix,-150,2025-04-28,3
+expense,Fast Food,-180,2025-04-28,4
+income,Freelance Web Design,2600,2025-04-28,1
+expense,Restaurant,-300,2025-04-28,3
+expense,Transport,-200,2025-04-28,3
+expense,Coffee,-80,2025-04-28,4
+expense,Clothes,-830,2025-04-28,3
+expense,Streaming Music,-120,2025-04-28,3
+income,Scholarship Bonus,1200,2025-04-28,1
+expense,Books,-420,2025-04-28,2
+expense,Snacks,-95,2025-04-28,4
+expense,Electricity Bill,-350,2025-04-28,2
+expense,Phone Plan,-320,2025-04-28,3
+expense,Groceries,-810,2025-04-28,2

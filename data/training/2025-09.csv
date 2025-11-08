@@ -1,0 +1,83 @@
+type,description,amount,date,priority
+income,Part-Time Job,7200,2025-09-01,0
+expense,Rent Apartment,-4000,2025-09-01,2
+expense,Internet Bill,-400,2025-09-01,3
+expense,Groceries Week 1,-780,2025-09-02,1
+income,Freelance Project Payment,9500,2025-09-02,2
+expense,Electric Bill,-520,2025-09-03,1
+expense,Water Bill,-420,2025-09-03,0
+income,Gift from Family,1500,2025-09-03,3
+expense,Public Transport,-150,2025-09-04,1
+expense,Coffee Shop,-170,2025-09-04,2
+income,Scholarship,2800,2025-09-05,3
+expense,Gym Membership,-500,2025-09-05,0
+expense,Phone Bill,-340,2025-09-06,2
+income,Online Course Refund,800,2025-09-06,1
+expense,Streaming Subscription,-199,2025-09-06,3
+expense,Lunch Out,-260,2025-09-07,0
+income,Side Hustle,1900,2025-09-07,2
+expense,Groceries Week 2,-820,2025-09-07,1
+expense,Pet Supplies,-450,2025-09-08,0
+income,Freelance Task Payment,6000,2025-09-08,3
+expense,Taxi Ride,-220,2025-09-09,2
+expense,Snacks,-180,2025-09-09,1
+income,App Reward,900,2025-09-09,0
+expense,Movie Ticket,-290,2025-09-10,3
+expense,Clothing,-1100,2025-09-10,1
+income,Freelance Bonus,2000,2025-09-10,2
+expense,Groceries Week 3,-830,2025-09-11,0
+expense,Transport Card,-180,2025-09-11,1
+income,Investment Return,1300,2025-09-12,2
+expense,Laundry,-200,2025-09-12,3
+expense,Electric Bill 2,-530,2025-09-13,1
+income,Loan Interest,1500,2025-09-13,0
+expense,Internet Renewal,-400,2025-09-14,2
+expense,Fast Food,-250,2025-09-14,1
+income,Gift Card Exchange,950,2025-09-15,3
+expense,Rent Garage,-1000,2025-09-15,0
+expense,Home Cleaning,-400,2025-09-15,1
+income,Stock Dividend,900,2025-09-16,2
+expense,Gym Renewal,-550,2025-09-16,3
+expense,Groceries Week 4,-780,2025-09-17,1
+income,Freelance Task Payment 2,6400,2025-09-17,0
+expense,Netflix Subscription,-229,2025-09-18,3
+expense,Pharmacy,-320,2025-09-18,2
+income,Online Store Sale,2100,2025-09-19,1
+expense,Taxi Ride 2,-190,2025-09-19,0
+expense,Electric Bill 3,-520,2025-09-19,2
+income,Referral Program,1200,2025-09-20,3
+expense,Tech Accessories,-600,2025-09-20,1
+expense,Lunch Out 2,-280,2025-09-21,0
+income,Freelance Mini Job,2700,2025-09-21,2
+expense,Rent Payment 2,-4000,2025-09-22,1
+expense,Water Bill 2,-410,2025-09-22,3
+income,Freelance Bonus 2,3100,2025-09-23,0
+expense,Fast Food 2,-290,2025-09-23,1
+expense,Internet Bill 2,-400,2025-09-23,2
+income,Scholarship Bonus,1800,2025-09-24,3
+expense,Pet Food,-400,2025-09-24,0
+expense,Coffee Beans,-150,2025-09-24,2
+income,Freelance Payment,5900,2025-09-25,1
+expense,Transport App,-210,2025-09-25,3
+expense,Phone Plan Renewal,-350,2025-09-25,0
+income,App Cash Reward,600,2025-09-26,1
+expense,Movie Rental,-130,2025-09-26,2
+expense,Home Cleaning 2,-410,2025-09-27,3
+income,Freelance Final Job,7200,2025-09-27,0
+expense,Electric Bill Final,-540,2025-09-27,1
+expense,Groceries Final,-810,2025-09-27,2
+income,Stock Dividend 2,1000,2025-09-28,3
+expense,Snacks 2,-160,2025-09-28,0
+expense,Spotify Family,-179,2025-09-28,2
+income,Loan Return,1700,2025-09-29,1
+expense,Book Purchase,-450,2025-09-29,3
+expense,Pet Grooming,-480,2025-09-29,0
+income,Part-Time Job,7200,2025-09-30,2
+expense,Netflix Renewal,-229,2025-09-30,1
+expense,Transport Card 2,-200,2025-09-30,3
+income,Freelance Payment 2,6800,2025-09-30,0
+expense,Electric Bill End,-540,2025-09-30,2
+expense,Groceries Week 5,-790,2025-09-30,1
+income,App Bonus,800,2025-09-30,3
+expense,Pharmacy 2,-310,2025-09-30,0
+expense,Coffee Shops 2,-150,2025-09-30,1

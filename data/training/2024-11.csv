@@ -1,0 +1,13 @@
+type,description,amount,date,priority
+income,Student Salary,9000,2024-11-01,0
+expense,Rent,-8000,2024-11-02,1
+expense,Groceries,-750,2024-11-03,1
+expense,Internet Bill,-390,2024-11-05,2
+expense,Netflix,-150,2024-11-06,3
+expense,Transport,-950,2024-11-09,1
+expense,Restaurant,-420,2024-11-12,2
+income,Freelance Job,2500,2024-11-14,0
+expense,Water Bill,-130,2024-11-17,2
+expense,Gym,-600,2024-11-19,2
+expense,Electric Bill,-670,2024-11-22,1
+expense,Apple Music,-110,2024-11-25,3

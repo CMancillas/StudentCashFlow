@@ -1,0 +1,72 @@
+type,description,amount,date,priority
+income,Part-Time Job,7000,2025-11-01,2
+income,Gift from Parents,1200,2025-11-03,1
+income,Freelance Design Project,2500,2025-11-05,3
+income,Scholarship Bonus,1500,2025-11-07,1
+expense,Rent Payment,-4000,2025-11-02,3
+expense,Electric Bill,-600,2025-11-03,2
+expense,Groceries (Weekly) #1,-850,2025-11-04,1
+expense,Spotify Premium,-149,2025-11-05,3
+expense,Public Transport Card,-450,2025-11-06,1
+expense,Phone Plan,-299,2025-11-06,2
+expense,Coffee Shop,-180,2025-11-07,3
+expense,Groceries (Weekly) #2,-890,2025-11-08,2
+expense,Gym Membership Renewal,-700,2025-11-09,1
+expense,Netflix Subscription,-199,2025-11-10,2
+expense,Pet Food,-400,2025-11-10,1
+expense,Streaming Platform Bundle,-350,2025-11-11,3
+expense,Water Bill,-230,2025-11-11,2
+expense,Groceries (Weekly) #3,-870,2025-11-12,3
+expense,Transport (Uber Rides),-600,2025-11-13,2
+expense,Movie Night,-250,2025-11-14,1
+expense,Fast Food Lunch,-120,2025-11-14,3
+expense,Laundry,-200,2025-11-15,1
+expense,Parking Fee,-90,2025-11-15,2
+expense,Streaming Add-On,-99,2025-11-16,3
+expense,Haircut,-300,2025-11-16,1
+expense,Snacks,-75,2025-11-17,3
+expense,Taxi Ride,-240,2025-11-17,2
+expense,Internet Bill,-389,2025-11-18,3
+expense,Medicine Purchase,-560,2025-11-18,3
+expense,Public Library Fee,-60,2025-11-19,2
+expense,Gift for Friend,-450,2025-11-19,3
+expense,Restaurant Dinner,-780,2025-11-20,2
+expense,Parking Garage,-150,2025-11-20,1
+expense,Bus Pass Renewal,-400,2025-11-21,2
+expense,Snacks (Campus),-90,2025-11-21,1
+expense,Doctor Visit,-900,2025-11-22,3
+expense,Online Course,-600,2025-11-22,1
+expense,Game Subscription,-250,2025-11-23,2
+expense,Clothes Shopping,-1300,2025-11-23,1
+expense,Cinema Tickets,-220,2025-11-24,3
+expense,Taxi to Event,-320,2025-11-24,3
+expense,Coffee Beans,-200,2025-11-25,2
+expense,Uber Ride,-180,2025-11-25,1
+expense,Snacks and Drinks,-150,2025-11-26,3
+expense,Laptop Charger,-600,2025-11-26,1
+expense,Book Purchase,-450,2025-11-27,2
+expense,Charity Donation,-300,2025-11-27,1
+expense,Fast Food Dinner,-250,2025-11-28,2
+expense,Grocery Snacks,-220,2025-11-28,3
+expense,Transport Ticket,-120,2025-11-28,1
+expense,Birthday Gift,-500,2025-11-29,3
+expense,Streaming App,-199,2025-11-29,1
+expense,Parking Lot Fee,-80,2025-11-29,2
+expense,Clothing Accessories,-300,2025-11-30,1
+expense,Snacks for Study,-100,2025-11-30,3
+expense,Credit Card Fee,-250,2025-11-30,2
+expense,App Subscription,-150,2025-11-30,1
+expense,Taxi to Airport,-600,2025-11-30,2
+expense,Airbnb Payment,-2500,2025-11-30,3
+expense,Cinema Snack Combo,-180,2025-11-30,1
+expense,Clothing Store,-950,2025-11-30,2
+expense,Gadget Repair,-1100,2025-11-30,1
+expense,Cosmetics Purchase,-350,2025-11-30,3
+expense,Gym Protein,-400,2025-11-30,2
+expense,Lunch with Friends,-500,2025-11-30,1
+expense,Water Bottle,-90,2025-11-30,2
+expense,Transport (Bus),-120,2025-11-30,1
+expense,Groceries (Weekly) #4,-860,2025-11-30,3
+expense,Credit Interest,-200,2025-11-30,3
+expense,Gift Wrapping,-100,2025-11-30,1
+expense,Bar Night,-600,2025-11-30,2

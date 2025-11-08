@@ -1,0 +1,17 @@
+type,description,amount,date,priority
+income,Part-Time Job,7000,2025-12-01,1
+income,Freelance Project,5000,2025-12-01,2
+expense,Rent,-4000,2025-12-02,1
+expense,Groceries,-800,2025-12-02,2
+income,Scholarship Bonus,2000,2025-12-03,3
+expense,Internet Bill,-400,2025-12-03,1
+expense,Phone Plan,-300,2025-12-03,2
+income,Gift from Family,1200,2025-12-04,1
+expense,Coffee,-150,2025-12-04,3
+expense,Fast Food,-200,2025-12-04,2
+income,Freelance Task,3000,2025-12-05,2
+expense,Gym Membership,-600,2025-12-05,3
+income,Bonus,2500,2025-12-06,1
+expense,Books,-500,2025-12-06,2
+income,App Reward,700,2025-12-07,3
+expense,Lunch Out,-250,2025-12-07,1

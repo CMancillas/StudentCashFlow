@@ -88,6 +88,7 @@ def infer_periodicity(is_recurring: bool) -> Optional[str]:
 
     return None
 
+
 def assign_priority(category: str) -> int:
     """
     Lower number = more important.
@@ -116,43 +117,53 @@ def assign_priority(category: str) -> int:
     
     return 5
 
+
+ALLOWED_COLS = [
+    "id",
+    "type",
+    "description",
+    "amount",
+    "date",
+    "priority",
+    "source",
+    "due_date",
+    "status",
+]
+
+
 def classify_transactions(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Take the DataFrame from ingest and add:
-    - category
-    - is_recurring
-    - periodicity
-    - priority
-    - pay_on (if not already present)
+    Normalize and assign priority based on category rules.
+
+    - If 'type' is missing, infer it from amount (>0 income, else expense).
+    - For each row, compute category (using detect_category) and then
+      priority (using assign_priority).
+    - Keep ONLY the allowed columns in the final DataFrame.
     """
-    # We make a copy to avoid mutating in place (safer)
     out = df.copy()
 
-    out["category"] = [
-        detect_category(desc, amt)
-        for desc, amt in zip(out["description"], out["amount"])
-    ]
+    if "type" not in out.columns and "amount" in out.columns:
+        out["type"] = out["amount"].apply(
+            lambda x: "income" if x > 0 else "expense"
+        )
 
-    out["is_recurring"] = [
-        infer_recurring(cat, desc)
-        for cat, desc in zip(out["category"], out["description"])
-    ]
+    if "date" in out.columns:
+        out["date"] = pd.to_datetime(out["date"], errors="coerce")
 
-    out["periodicity"] = [infer_periodicity(ir) for ir in out["is_recurring"]]
+    priorities: list[int] = []
+    for desc, amt, typ in zip(
+        out.get("description", []),
+        out.get("amount", []),
+        out.get("type", []),
+    ):
+        category = detect_category(str(desc), float(amt))
+        pr = assign_priority(category)
+        priorities.append(pr)
 
-    out["priority"] = [assign_priority(cat) for cat in out["category"]]
+    out["priority"] = priorities
 
-    # Check if 'pay_on' exists. If not, create it from 'date' or use a default date.
-    if 'pay_on' not in out.columns:
-        if 'date' in out.columns:
-            out['pay_on'] = pd.to_datetime(out['date'], errors='coerce')  # Use the 'date' column if available
-        else:
-            out['pay_on'] = pd.to_datetime('2025-11-04')  # Default date if no date exists
-
-    # Make sure 'pay_on' is in a proper datetime format
-    out['pay_on'] = pd.to_datetime(out['pay_on'], errors='coerce')
-
-    return out
+    cols = [c for c in ALLOWED_COLS if c in out.columns]
+    return out[cols]
 
 
 if __name__ == "__main__":

@@ -1,0 +1,16 @@
+type,description,amount,date,priority
+income,Part-Time Job,5000,2025-12-01,1
+expense,Rent,-4000,2025-12-01,2
+expense,Groceries,-800,2025-12-02,1
+income,Freelance Mini Job,900,2025-12-02,2
+expense,Internet Bill,-250,2025-12-03,2
+expense,Phone Plan,-300,2025-12-03,3
+income,Scholarship,1500,2025-12-04,1
+expense,Transport,-500,2025-12-04,2
+expense,Coffee,-100,2025-12-04,3
+income,Gift,200,2025-12-05,2
+expense,Snacks,-200,2025-12-05,3
+income,Part-Time Tutoring,800,2025-12-06,1
+expense,Lunch Out,-700,2025-12-06,2
+income,Online Sale,300,2025-12-07,3
+expense,Books,-400,2025-12-07,1

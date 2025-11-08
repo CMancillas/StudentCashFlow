@@ -1,0 +1,12 @@
+type,description,amount,date,priority
+income,Christmas Bonus,6000,2024-12-01,0
+income,Student Salary,9000,2024-12-01,1
+expense,Gift Shopping,-2000,2024-12-05,2
+expense,Rent,-8000,2024-12-02,3
+expense,Transport,-900,2024-12-04,1
+expense,Groceries,-750,2024-12-06,3
+expense,Electric Bill,-680,2024-12-10,0
+expense,Internet Bill,-400,2024-12-13,2
+expense,Netflix,-150,2024-12-17,1
+expense,Restaurant,-450,2024-12-20,3
+expense,Trip,-2500,2024-12-27,0

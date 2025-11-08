@@ -137,6 +137,7 @@ Top postponed payments:
             temperature=0.75,  # Allow more creativity in suggestions
         )
 
+        print(f"API Response: {response}")
         return response.choices[0].message.content.strip()
 
     except Exception as e:
