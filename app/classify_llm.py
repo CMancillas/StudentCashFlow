@@ -102,13 +102,13 @@ def classify_with_llm(df: pd.DataFrame) -> pd.DataFrame:
 
     try:
         response = client.chat.completions.create(
-            model="anthropic/claude-3.5-sonnet",
+            model="deepseek/deepseek-chat-v3.1:free",
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
             max_tokens=800,
-            temperature=0.2  # low randomness for consistency
+            temperature=0.2  
         )
 
         raw_text = response.choices[0].message.content.strip()

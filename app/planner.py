@@ -146,115 +146,166 @@ def plan_payments(
 # ---------------------------------------------------------------------
 #  OPTIMIZED PLANNER
 # ---------------------------------------------------------------------
-
-import pandas as pd
-from typing import List
-
 def optimize_payments(tx: pd.DataFrame, start_balance: float, min_buffer: float) -> pd.DataFrame:
     """
-    Returns only the payments that can be applied without bajar del min_buffer.
+    Devuelve SOLO las transacciones de gasto que se van a pagar.
+
+    Convenciones:
+    - start_balance YA incluye todos los ingresos (priority 0 / type 'income').
+    - NO se devuelven filas con priority 0.
+    
+    Reglas:
+    - Gastos con priority == 1:
+        -> Siempre se pagan (mandatorios).
+    - Gastos con priority >= 2:
+        -> Knapsack 0/1:
+            * costo = |amount|
+            * capacidad = start_balance - min_buffer - sum(|mandatory|)
+              (min 0)
+            * maximiza valor favoreciendo prioridad más alta (2 > 3 > 4 > ...).
+    - El saldo final se calcula solo con los gastos seleccionados.
+      (Si los mandatorios solos exceden capacidad, se aceptan igual por regla tuya.)
+    
+    Salida:
+    - SOLO movimientos seleccionados (expenses):
+        columnas: pay_on, description, amount, priority,
+                  balance_after, status, reason, type
     """
+
     if tx.empty:
         return pd.DataFrame(columns=[
             "pay_on", "description", "amount", "priority",
-            "balance_after", "status", "reason", "type"
+            "balance_after", "status", "reason", "type",
         ])
 
     df = tx.copy()
-    df["date"] = pd.to_datetime(df["date"]).dt.date
+
+    # Normalizar fecha
+    if "date" not in df.columns and "pay_on" in df.columns:
+        df = df.rename(columns={"pay_on": "date"})
+    if "date" not in df.columns:
+        raise ValueError("Se requiere columna 'date' o 'pay_on' en tx.")
+
+    df["date"] = pd.to_datetime(df["date"])
     df["amount"] = df["amount"].astype(float)
     df["priority"] = df["priority"].astype(int)
 
-    plan_rows: List[dict] = []
+    # Solo trabajamos con expenses; incomes quedan fuera del plan
+    df = df[df["type"] == "expense"].copy()
+    if df.empty:
+        return pd.DataFrame(columns=[
+            "pay_on", "description", "amount", "priority",
+            "balance_after", "status", "reason", "type",
+        ])
 
-    # --- Apply all incomes ---
-    incomes = df[df["type"] == "income"].sort_values("date")
-    expenses = df[df["type"] == "expense"].sort_values(["priority", "date"])
+    # Orden cronológico + prioridad, conservar índice original
+    df = (
+        df.sort_values(["date", "priority"])
+          .reset_index()
+          .rename(columns={"index": "orig_index"})
+    )
+
+    # Separar mandatorios y opcionales
+    mandatory = df[df["priority"] == 1].copy()
+    optional = df[df["priority"] >= 2].copy()
+
+    # Capacidad total para TODOS los gastos sin romper buffer:
+    # start_balance + sum(expenses_sel) >= min_buffer
+    #  => sum(|expenses_sel|) <= start_balance - min_buffer
+    total_capacity = max(0.0, start_balance - min_buffer)
+
+    # Costo mandatorio
+    mandatory_cost = mandatory["amount"].abs().sum()
+
+    # Capacidad para opcionales (si mandatorios ya exceden, se pone 0)
+    capacity_optional = max(0.0, total_capacity - mandatory_cost)
+
+    # ---------------- Knapsack para opcionales ----------------
+    optional_selected = pd.DataFrame(columns=df.columns)
+
+    if capacity_optional > 0 and not optional.empty:
+        opt = optional.copy()
+
+        opt["cost"] = opt["amount"].abs()
+        scale = 1
+        opt["cost_int"] = (opt["cost"] / scale).astype(int)
+        C = int(capacity_optional / scale)
+
+        max_p = opt["priority"].max()
+        opt["value"] = (max_p - opt["priority"] + 1) ** 3
+
+        n = len(opt)
+        costs = opt["cost_int"].tolist()
+        values = opt["value"].tolist()
+        orig_idx = opt["orig_index"].tolist()
+
+        dp = [[0.0] * (C + 1) for _ in range(n + 1)]
+
+        for i in range(1, n + 1):
+            cost = costs[i - 1]
+            val = values[i - 1]
+            for c in range(C + 1):
+                best = dp[i - 1][c]
+                if cost <= c:
+                    cand = dp[i - 1][c - cost] + val
+                    if cand > best:
+                        best = cand
+                dp[i][c] = best
+
+        chosen = set()
+        c = C
+        for i in range(n, 0, -1):
+            if dp[i][c] != dp[i - 1][c]:
+                idx = i - 1
+                chosen.add(orig_idx[idx])
+                c -= costs[idx]
+
+        optional_selected = opt[opt["orig_index"].isin(chosen)]
+
+    # ---------------- Construir plan final (solo gastos pagados) ----------------
+
+    selected = pd.concat(
+        [mandatory, optional_selected],
+        axis=0
+    ).drop_duplicates(subset=["orig_index"]).sort_values(["date", "priority"])
 
     balance = start_balance
-    for _, row in incomes.iterrows():
-        balance += row["amount"]
-        plan_rows.append({
-            "pay_on": row["date"],
-            "description": row["description"],
-            "amount": row["amount"],
-            "priority": row["priority"],
+    rows: List[dict] = []
+
+    for _, row in selected.iterrows():
+        pay_on = row["date"].date()
+        desc = row["description"]
+        amt = float(row["amount"])   # negativo
+        prio = int(row["priority"])
+        typ = row["type"]
+
+        if prio == 1:
+            balance += amt
+            status = "scheduled"
+            reason = "priority_1_mandatory"
+        else:
+            balance += amt
+            status = "scheduled"
+            reason = "selected_by_knapsack"
+
+        rows.append({
+            "pay_on": pay_on,
+            "description": desc,
+            "amount": amt,
+            "priority": prio,
             "balance_after": balance,
-            "status": "applied",
-            "reason": "income",
-            "type": "income"
+            "status": status,
+            "reason": reason,
+            "type": typ,
         })
 
-    # --- Apply mandatory payments (priority 1 & 2) ---
-    must_pay_mask = expenses["priority"].isin([1, 2])
-    must_pay = expenses[must_pay_mask].reset_index()
+    result = pd.DataFrame(rows)
 
-    available_balance = balance - min_buffer
+    # Chequeo mental rápido que puedes hacer en tu pipeline:
+    # final_balance = start_balance + result["amount"].sum()
+    # assert final_balance >= min_buffer or mandatory_cost > total_capacity
 
-    applied_mandatory = []
-    for _, row in must_pay.iterrows():
-        amt = abs(row["amount"])
-        if amt <= available_balance:
-            balance += row["amount"]  # amount < 0
-            available_balance -= amt
-            applied_mandatory.append(row.name)
-            plan_rows.append({
-                "pay_on": row["date"],
-                "description": row["description"],
-                "amount": row["amount"],
-                "priority": row["priority"],
-                "balance_after": balance,
-                "status": "scheduled",
-                "reason": f"priority_{row['priority']}_mandatory",
-                "type": "expense"
-            })
-        # si no hay suficiente balance, simplemente no se aplica (se ignora)
-
-    # --- Knapsack para pagos opcionales ---
-    optional = expenses[~must_pay_mask].reset_index(drop=True)
-    n = len(optional)
-    dp = [0] * (int(available_balance) + 1)
-    decision = [-1] * (int(available_balance) + 1)
-
-    if n > 0 and available_balance > 0:
-        max_priority = optional["priority"].max()
-        values = (max_priority - optional["priority"] + 1) ** 3
-
-        for i in range(n):
-            amt = int(abs(optional.loc[i, "amount"]))
-            val = values[i]
-            if amt <= available_balance:
-                for b in range(int(available_balance), amt - 1, -1):
-                    if dp[b - amt] + val > dp[b]:
-                        dp[b] = dp[b - amt] + val
-                        decision[b] = i
-
-        # Reconstruir pagos aplicados
-        rem_balance = int(available_balance)
-        applied_indices = []
-        while rem_balance > 0 and decision[rem_balance] != -1:
-            idx = decision[rem_balance]
-            if idx not in applied_indices:
-                applied_indices.append(idx)
-            rem_balance -= int(abs(optional.loc[idx, "amount"]))
-
-        for i in applied_indices:
-            row = optional.loc[i]
-            balance += row["amount"]
-            plan_rows.append({
-                "pay_on": row["date"],
-                "description": row["description"],
-                "amount": row["amount"],
-                "priority": row["priority"],
-                "balance_after": balance,
-                "status": "scheduled",
-                "reason": "selected_by_knapsack",
-                "type": "expense"
-            })
-
-    # --- Solo devolvemos pagos aplicables ---
-    result_df = pd.DataFrame(plan_rows).sort_values("pay_on").reset_index(drop=True)
-    return result_df
+    return result
 
 # ---------------------------------------------------------------------
 #  WRAPPERS
@@ -281,6 +332,7 @@ def build_optimized_forecast_and_plan(
     """Optimized version using smarter selection logic."""
     forecast_df = forecast_balance(classified_tx, start_balance, horizon_days)
     plan_df = optimize_payments(classified_tx, start_balance, min_buffer)
+    
     return forecast_df, plan_df
 
 def build_ml_forecast_and_plan(
@@ -320,10 +372,14 @@ def build_ml_forecast_and_plan(
 # ---------------------------------------------------------------------
 
 if __name__ == "__main__":
-    df = pd.read_csv("./data/transactions.csv")
+    df = pd.read_csv("./data/transactions2.csv")
     print("=== BASIC PLAN ===")
     f1, p1 = build_forecast_and_plan(df, 5000, 14, 1000)
     print(p1)
     print("\n=== OPTIMIZED PLAN ===")
     f2, p2 = build_optimized_forecast_and_plan(df, 5000, 14, 1000)
+    plan = optimize_payments(df, start_balance=14500, min_buffer=3660)
+    print(plan["amount"].sum())            # debería ser >= -10840
+    print(14500 + plan["amount"].sum())    # debería ser >= 3660
+
     print(p2)

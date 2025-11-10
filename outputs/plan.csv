@@ -1,20 +1,7 @@
 pay_on,description,amount,priority,balance_after,status,reason,type
-2025-11-01,Part-Time Job,7200.0,0,21700.0,applied,income,income
-2025-11-02,Uber Rides,-380.0,3,13016.0,scheduled,selected_by_knapsack,expense
-2025-11-03,Coffee Shops,-120.0,5,15231.0,scheduled,selected_by_knapsack,expense
-2025-11-04,Rent,-8500.0,1,20500.0,scheduled,priority_1_mandatory,expense
-2025-11-05,Spotify Subscription,-115.0,4,14536.0,scheduled,selected_by_knapsack,expense
-2025-11-06,Gaming Subscription,-250.0,5,15351.0,scheduled,selected_by_knapsack,expense
-2025-11-07,Online Tutoring,1500.0,0,23200.0,applied,income,income
-2025-11-08,Gym Membership,-580.0,4,14651.0,scheduled,selected_by_knapsack,expense
-2025-11-10,Internet Bill,-399.0,2,20101.0,scheduled,priority_2_mandatory,expense
-2025-11-12,Movie Night,-220.0,5,15601.0,scheduled,selected_by_knapsack,expense
-2025-11-13,Scholarship Bonus,3000.0,0,26200.0,applied,income,income
-2025-11-15,Electric Bill,-640.0,5,15821.0,scheduled,selected_by_knapsack,expense
-2025-11-16,Transport (Car Gas),-970.0,5,16461.0,scheduled,selected_by_knapsack,expense
-2025-11-17,Restaurant Dinner,-430.0,3,13396.0,scheduled,selected_by_knapsack,expense
-2025-11-19,Amazon Order,-520.0,5,17431.0,scheduled,selected_by_knapsack,expense
-2025-11-21,Phone Bill,-350.0,2,19751.0,scheduled,priority_2_mandatory,expense
-2025-11-23,Freelance Design,2800.0,0,29000.0,applied,income,income
-2025-11-25,Groceries #2,-710.0,3,13826.0,scheduled,selected_by_knapsack,expense
-2025-11-28,Weekend Trip,-1800.0,5,17951.0,scheduled,selected_by_knapsack,expense
+2025-11-04,Rent,-8500.0,1,4500.0,scheduled,priority_1_mandatory,expense
+2025-11-08,Gym Membership,-580.0,1,3920.0,scheduled,priority_1_mandatory,expense
+2025-11-09,Groceries,-690.0,1,3230.0,scheduled,priority_1_mandatory,expense
+2025-11-15,Electric Bill,-640.0,1,2590.0,scheduled,priority_1_mandatory,expense
+2025-11-16,Transport (Car Gas),-970.0,1,1620.0,scheduled,priority_1_mandatory,expense
+2025-11-25,Groceries #2,-710.0,1,910.0,scheduled,priority_1_mandatory,expense

@@ -71,7 +71,7 @@ def generate_ai_summary(
     plan_df: pd.DataFrame,
     start_balance: float,
     min_buffer: float,
-    model: str = "anthropic/claude-3.5-sonnet",
+    model: str = "deepseek/deepseek-chat-v3.1:free",
 ) -> str:
     """
     Build a concise student-friendly summary via Claude 3.5 Sonnet on OpenRouter.
@@ -112,10 +112,14 @@ Top postponed payments:
     - Should they divide any payments to stay above buffer?
     - Can they save or cut back on any expenses?
     - You can suggest **prioritizing certain payments** (like rent/tuition) and **postponing others** (like subscriptions or non-essential purchases).
-
-2. Make the recommendations **actionable**, **clear**, and **encouraging**.
+    
+2. Make the recommendations actionable, clear, and encouraging.
 
 3. Start your response with: "Here’s your financial summary:".
+
+4. Use plain text paragraphs and bullet points.
+5. Do NOT use Markdown formatting symbols like **, *, _, or $ for LaTeX.
+6. Always include normal spaces between words.
 """
 
     try:
@@ -134,7 +138,7 @@ Top postponed payments:
                 {"role": "user", "content": prompt},
             ],
             max_tokens=350,
-            temperature=0.75,  # Allow more creativity in suggestions
+            temperature=0.5,  
         )
 
         print(f"API Response: {response}")

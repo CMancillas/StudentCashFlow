@@ -1,20 +1,21 @@
 type,description,amount,date,priority
-income,Student Salary,9500,2025-11-01,0
-expense,Transport (Car Gas) #1,-1100,2025-11-02,1
-expense,Groceries #1,-750,2025-11-03,1
-expense,Internet Bill,-410,2025-11-04,2
-expense,Home Security,-300,2025-11-05,3
-expense,Netflix Subscription,-160,2025-11-07,2
-expense,Groceries #2,-780,2025-11-09,1
-expense,Gym Membership,-620,2025-11-11,1
-expense,Water Bill,-140,2025-11-12,2
-expense,Transport (Car Gas) #2,-1050,2025-11-13,1
-income,Freelance Project,2500,2025-11-15,0
-expense,Groceries #3,-800,2025-11-17,3
-expense,Electric Bill,-670,2025-11-18,1
-expense,Groceries #4,-730,2025-11-21,2
-expense,Spotify Subscription,-120,2025-11-23,3
-expense,AppleCare+ Coverage,-90,2025-11-26,2
-expense,Weekend Trip,-1500,2025-11-28,3
-income,Gift from Family,1000,2025-11-29,0
-expense,Restaurant Dinner,-450,2025-11-30,2
+income,Part-Time Job,7200,2025-11-01,0
+expense,Uber Rides,-380,2025-11-02,2
+expense,Coffee Shops,-120,2025-11-03,3
+expense,Rent,-8500,2025-11-04,1
+expense,Spotify Subscription,-115,2025-11-05,3
+expense,Gaming Subscription,-250,2025-11-06,2
+income,Online Tutoring,1500,2025-11-07,0
+expense,Gym Membership,-580,2025-11-08,1
+expense,Groceries,-690,2025-11-09,1
+expense,Internet Bill,-399,2025-11-10,2
+expense,Movie Night,-220,2025-11-12,3
+income,Scholarship Bonus,3000,2025-11-13,0
+expense,Electric Bill,-640,2025-11-15,1
+expense,Transport (Car Gas),-970,2025-11-16,1
+expense,Restaurant Dinner,-430,2025-11-17,2
+expense,Amazon Order,-520,2025-11-19,3
+expense,Phone Bill,-350,2025-11-21,2
+income,Freelance Design,2800,2025-11-23,0
+expense,Groceries #2,-710,2025-11-25,1
+expense,Weekend Trip,-1800,2025-11-28,3

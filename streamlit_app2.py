@@ -43,10 +43,20 @@ if "show_preview" not in st.session_state:
 
 # ---- Sidebar inputs
 st.sidebar.header("Inputs")
+uploaded_csv = st.sidebar.file_uploader("Upload transactions CSV", type=["csv"])
+use_llm_classification = st.sidebar.checkbox("Use AI classification", value=False)
 horizon_days: int = st.sidebar.number_input("Horizon (days)", value=14, min_value=1, max_value=60, step=1)
 #min_buffer: float = st.sidebar.number_input("Min buffer (MXN)", value=1000.0, step=100.0)
-uploaded_csv = st.sidebar.file_uploader("Upload transactions CSV", type=["csv"])
-use_llm_classification = st.sidebar.checkbox("Use AI classification (Claude 3.5 Sonnet)", value=False)
+
+# Display start_balance and min_buffer as inputs
+if "total_balance" in st.session_state:
+    st.sidebar.markdown(f"**Total Balance:** ${st.session_state['total_balance']:,.2f}")
+    st.session_state["min_buffer"] = st.sidebar.number_input(
+        "Minimum Buffer (MXN)",
+        value=st.session_state.get("min_buffer", st.session_state["total_balance"]*0.3),
+        step=100.0,
+        min_value=0.0
+    )
 
 if "df_cls" not in st.session_state:
     st.session_state["df_cls"] = None
@@ -119,6 +129,9 @@ if load_btn:
         start_balance = float(df_cls.loc[mask_p0, "amount"].sum())
         st.session_state["total_balance"] = start_balance
 
+        st.session_state["start_balance"] = start_balance
+        st.session_state["min_buffer"] = start_balance * 0.30
+
         # 7. UI
         with norm_ph:
             st.markdown(
@@ -146,8 +159,13 @@ if load_btn:
             )
 
             st.subheader("Normalized transactions")
-            st.caption("Loaded from the uploaded CSV.")
-            st.dataframe(df_cls, use_container_width=True, height=360)
+            st.caption("Loaded from the uploaded CSV. Priority rules → ")
+            st.caption( "0 = income" )
+            st.caption( "1 = must pay" )
+            st.caption( "2 = basic services" )
+            st.caption( "3 = medium importance" )
+            st.caption( "4–5 = optional or luxury")
+            st.dataframe(df_cls.sort_values(["priority"]), use_container_width=True, height=360)
 
     except Exception as e:
         st.error(f"Error while loading/normalizing data: {e}")
@@ -191,11 +209,8 @@ if plan_btn:
         df_cls["priority"] = pd.to_numeric(df_cls["priority"], errors="coerce")
         df_cls["date"] = pd.to_datetime(df_cls["date"])
 
-        mask_p0 = df_cls["priority"] == 0
-        start_balance = float(df_cls.loc[mask_p0, "amount"].sum())
-        st.session_state["start_balance"] = start_balance
-        min_buffer = start_balance * 0.30
-        
+        start_balance = st.session_state.get("start_balance", 0.0)
+        min_buffer = st.session_state.get("min_buffer", start_balance * 0.30)
 
         with plan_ph:
             # --- Display Starting Balance ---
@@ -257,21 +272,6 @@ if plan_btn:
                     f"Min: {float(forecast_df['balance'].min()):,.2f}"
                 )
 
-                st.subheader("⏱️ Optimization Timeline")
-                if "pay_on" in plan_df.columns and "status" in plan_df.columns:
-                    timeline_chart = (
-                        alt.Chart(plan_df)
-                        .mark_circle(size=90)
-                        .encode(
-                            x="pay_on:T",
-                            y="amount:Q",
-                            color=alt.Color("status:N", legend=alt.Legend(title="Status")),
-                            tooltip=["description", "amount", "status", "priority", "pay_on"]
-                        )
-                        .properties(height=300)
-                    )
-                    st.altair_chart(timeline_chart, use_container_width=True)
-          
 
             # RIGHT COLUMN - Plan Visualization
             with col2:
@@ -293,11 +293,70 @@ if plan_btn:
                     f"Min: {float(forecast_df['balance'].min()):,.2f}"
                 )
 
-                st.subheader("🧾 Payment Plan")
-                st.dataframe(
-                    plan_df.sort_values(["priority"]),
-                    use_container_width=True, height=360
+            st.subheader("⏱️ Optimization Timeline")
+
+            if "pay_on" in plan_df.columns and "status" in plan_df.columns:
+                # Asegurar que priority sea entero y limitar de 1 a 5
+                plan_df["priority"] = plan_df["priority"].astype(int).clip(lower=1, upper=5)
+
+                # Tamaño invertido: prioridad 1 = mayor tamaño, prioridad 5 = menor tamaño
+                max_size = 150  # tamaño para priority 1
+                min_size = 60   # tamaño para priority 5
+
+                def priority_to_size(p):
+                    # Invertimos el tamaño
+                    return max_size - (p - 1) * (max_size - min_size) / 4  # 4 = 5-1
+
+                plan_df["size_priority"] = plan_df["priority"].apply(priority_to_size)
+
+                # Color map: solo gastos en rojo
+                color_scale = alt.Scale(
+                    domain=["expense"], range=["#dc2626"]
                 )
+
+                # Puntos de transacciones
+                points = (
+                    alt.Chart(plan_df)
+                    .mark_circle(opacity=0.8)
+                    .encode(
+                        x="pay_on:T",
+                        y="balance_after:Q",
+                        color=alt.Color("type:N", scale=color_scale, legend=alt.Legend(title="Type")),
+                        #size=alt.Size("size_priority:Q", legend=alt.Legend(title="Priority")),
+                        tooltip=[
+                            "description",
+                            "amount",
+                            "balance_after",
+                            "status",
+                            "priority",
+                            "pay_on"
+                        ],
+                    )
+                )
+
+                # Línea de balance acumulado
+                balance_line = (
+                    alt.Chart(plan_df)
+                    .mark_line(color="#1f77b4", strokeWidth=2)
+                    .encode(
+                        x="pay_on:T",
+                        y="balance_after:Q",
+                        tooltip=["pay_on", "balance_after"]
+                    )
+                )
+
+                # Combinar puntos y línea
+                timeline_chart = points + balance_line
+
+                # Mostrar en Streamlit
+                st.altair_chart(timeline_chart.properties(height=350), use_container_width=True)
+
+
+            st.subheader("🧾 Payment Plan")
+            st.dataframe(
+                plan_df.sort_values(["balance_after"]),
+                use_container_width=True, height=360
+            )
 
 
 
@@ -318,9 +377,9 @@ if ai_btn:
             st.stop()
 
         df_cls = st.session_state["uploaded_df"].copy()
+        start_balance = st.session_state.get("start_balance", 0.0)
+        min_buffer = st.session_state.get("min_buffer", start_balance * 0.30)
 
-        start_balance = float(df_cls.loc[df_cls["priority"] == 0, "amount"].sum())
-        min_buffer = start_balance * 0.30
         forecast_df, plan_df = build_forecast_and_plan(
             df_cls,
             start_balance=start_balance,
@@ -334,7 +393,13 @@ if ai_btn:
         )
 
         with st.expander("AI-generated summary (expand to view)"):
-            st.write(text)
+            # Limpia Markdown agresivo que pueda romper el estilo
+            clean = (
+                text.replace("**", "")
+                    .replace("*", "")
+                    .replace("_", "")
+            )
+            st.markdown(clean)
 
         with st.expander("Deterministic summary (fallback)"):
             st.code(generate_deterministic_summary(forecast_df, plan_df, start_balance, min_buffer))
