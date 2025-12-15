@@ -71,10 +71,10 @@ def generate_ai_summary(
     plan_df: pd.DataFrame,
     start_balance: float,
     min_buffer: float,
-    model: str = "deepseek/deepseek-chat-v3.1:free",
+    model: str = "openai/gpt-3.5-turbo-instruct",
 ) -> str:
     """
-    Build a concise student-friendly summary via Claude 3.5 Sonnet on OpenRouter.
+    Build a concise student-friendly summary via DeepSeek V3.1 Sonnet on OpenRouter.
     If the LLM call fails, return the deterministic summary instead.
     """
     stats = _compute_stats(forecast_df, plan_df, start_balance, min_buffer)
@@ -138,7 +138,7 @@ Top postponed payments:
                 {"role": "user", "content": prompt},
             ],
             max_tokens=350,
-            temperature=0.5,  
+            temperature=0.7,  
         )
 
         print(f"API Response: {response}")

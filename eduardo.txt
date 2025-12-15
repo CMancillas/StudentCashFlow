@@ -1,4 +1,0 @@
-1.- el system prompt sea consistente entre la descripcion y los ejemplos (type,category)
-2.- solo qeudarme con presentar la primera parte
-3.- limpiar el repo
-4.- en el write up 

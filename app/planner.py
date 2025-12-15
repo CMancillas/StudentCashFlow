@@ -148,28 +148,28 @@ def plan_payments(
 # ---------------------------------------------------------------------
 def optimize_payments(tx: pd.DataFrame, start_balance: float, min_buffer: float) -> pd.DataFrame:
     """
-    Devuelve SOLO las transacciones de gasto que se van a pagar.
+    Returns ONLY the expense transactions that will be paid.
 
-    Convenciones:
-    - start_balance YA incluye todos los ingresos (priority 0 / type 'income').
-    - NO se devuelven filas con priority 0.
-    
-    Reglas:
-    - Gastos con priority == 1:
-        -> Siempre se pagan (mandatorios).
-    - Gastos con priority >= 2:
-        -> Knapsack 0/1:
-            * costo = |amount|
-            * capacidad = start_balance - min_buffer - sum(|mandatory|)
-              (min 0)
-            * maximiza valor favoreciendo prioridad más alta (2 > 3 > 4 > ...).
-    - El saldo final se calcula solo con los gastos seleccionados.
-      (Si los mandatorios solos exceden capacidad, se aceptan igual por regla tuya.)
-    
-    Salida:
-    - SOLO movimientos seleccionados (expenses):
-        columnas: pay_on, description, amount, priority,
-                  balance_after, status, reason, type
+    Conventions:
+    - start_balance ALREADY includes all incomes (priority 0 / type 'income').
+    - Rows with priority 0 are NOT returned.
+
+    Rules:
+    - Expenses with priority == 1:
+        -> Always paid (mandatory).
+    - Expenses with priority >= 2:
+        -> 0/1 Knapsack:
+            * cost = |amount|
+            * capacity = start_balance - min_buffer - sum(|mandatory|)
+            (minimum 0)
+            * maximize value by favoring higher priority (2 > 3 > 4 > ...).
+    - The final balance is calculated only with the selected expenses.
+    (If mandatory expenses alone exceed the capacity, they are still accepted by design.)
+
+    Output:
+    - ONLY selected expense transactions:
+        columns: pay_on, description, amount, priority,
+                balance_after, status, reason, type
     """
 
     if tx.empty:
@@ -180,7 +180,6 @@ def optimize_payments(tx: pd.DataFrame, start_balance: float, min_buffer: float)
 
     df = tx.copy()
 
-    # Normalizar fecha
     if "date" not in df.columns and "pay_on" in df.columns:
         df = df.rename(columns={"pay_on": "date"})
     if "date" not in df.columns:
@@ -190,7 +189,6 @@ def optimize_payments(tx: pd.DataFrame, start_balance: float, min_buffer: float)
     df["amount"] = df["amount"].astype(float)
     df["priority"] = df["priority"].astype(int)
 
-    # Solo trabajamos con expenses; incomes quedan fuera del plan
     df = df[df["type"] == "expense"].copy()
     if df.empty:
         return pd.DataFrame(columns=[
@@ -198,29 +196,21 @@ def optimize_payments(tx: pd.DataFrame, start_balance: float, min_buffer: float)
             "balance_after", "status", "reason", "type",
         ])
 
-    # Orden cronológico + prioridad, conservar índice original
     df = (
         df.sort_values(["date", "priority"])
           .reset_index()
           .rename(columns={"index": "orig_index"})
     )
 
-    # Separar mandatorios y opcionales
     mandatory = df[df["priority"] == 1].copy()
     optional = df[df["priority"] >= 2].copy()
 
-    # Capacidad total para TODOS los gastos sin romper buffer:
-    # start_balance + sum(expenses_sel) >= min_buffer
-    #  => sum(|expenses_sel|) <= start_balance - min_buffer
     total_capacity = max(0.0, start_balance - min_buffer)
 
-    # Costo mandatorio
     mandatory_cost = mandatory["amount"].abs().sum()
 
-    # Capacidad para opcionales (si mandatorios ya exceden, se pone 0)
     capacity_optional = max(0.0, total_capacity - mandatory_cost)
 
-    # ---------------- Knapsack para opcionales ----------------
     optional_selected = pd.DataFrame(columns=df.columns)
 
     if capacity_optional > 0 and not optional.empty:
@@ -262,7 +252,6 @@ def optimize_payments(tx: pd.DataFrame, start_balance: float, min_buffer: float)
 
         optional_selected = opt[opt["orig_index"].isin(chosen)]
 
-    # ---------------- Construir plan final (solo gastos pagados) ----------------
 
     selected = pd.concat(
         [mandatory, optional_selected],
@@ -301,9 +290,6 @@ def optimize_payments(tx: pd.DataFrame, start_balance: float, min_buffer: float)
 
     result = pd.DataFrame(rows)
 
-    # Chequeo mental rápido que puedes hacer en tu pipeline:
-    # final_balance = start_balance + result["amount"].sum()
-    # assert final_balance >= min_buffer or mandatory_cost > total_capacity
 
     return result
 
@@ -367,6 +353,7 @@ def build_ml_forecast_and_plan(
         )
 
     return forecast_df, plan_df
+    
 # ---------------------------------------------------------------------
 #  TEST MODE
 # ---------------------------------------------------------------------
@@ -379,7 +366,7 @@ if __name__ == "__main__":
     print("\n=== OPTIMIZED PLAN ===")
     f2, p2 = build_optimized_forecast_and_plan(df, 5000, 14, 1000)
     plan = optimize_payments(df, start_balance=14500, min_buffer=3660)
-    print(plan["amount"].sum())            # debería ser >= -10840
-    print(14500 + plan["amount"].sum())    # debería ser >= 3660
+    print(plan["amount"].sum())            
+    print(14500 + plan["amount"].sum())    
 
     print(p2)

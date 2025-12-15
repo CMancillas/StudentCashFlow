@@ -1,7 +1,15 @@
 pay_on,description,amount,priority,balance_after,status,reason,type
-2025-11-04,Rent,-8500.0,1,4500.0,scheduled,priority_1_mandatory,expense
-2025-11-08,Gym Membership,-580.0,1,3920.0,scheduled,priority_1_mandatory,expense
-2025-11-09,Groceries,-690.0,1,3230.0,scheduled,priority_1_mandatory,expense
-2025-11-15,Electric Bill,-640.0,1,2590.0,scheduled,priority_1_mandatory,expense
-2025-11-16,Transport (Car Gas),-970.0,1,1620.0,scheduled,priority_1_mandatory,expense
-2025-11-25,Groceries #2,-710.0,1,910.0,scheduled,priority_1_mandatory,expense
+2025-11-01,Transport (Car Gas) #1,-1000.0,5,10000.0,scheduled,selected_by_knapsack,expense
+2025-11-03,Internet Bill,-389.0,2,9611.0,scheduled,selected_by_knapsack,expense
+2025-11-03,Groceries #1,-700.0,3,8911.0,scheduled,selected_by_knapsack,expense
+2025-11-05,House System Alarm,-260.0,1,8651.0,scheduled,priority_1_mandatory,expense
+2025-11-09,Netflix Subscription,-150.0,4,8501.0,scheduled,selected_by_knapsack,expense
+2025-11-10,Groceries #2,-700.0,3,7801.0,scheduled,selected_by_knapsack,expense
+2025-11-11,Gym Membership,-600.0,4,7201.0,scheduled,selected_by_knapsack,expense
+2025-11-14,Water Bill,-120.0,2,7081.0,scheduled,selected_by_knapsack,expense
+2025-11-15,Transport (Car Gas) #2,-1000.0,5,6081.0,scheduled,selected_by_knapsack,expense
+2025-11-17,Groceries #3,-700.0,3,5381.0,scheduled,selected_by_knapsack,expense
+2025-11-19,Electric Bill,-650.0,5,4731.0,scheduled,selected_by_knapsack,expense
+2025-11-24,Groceries #4,-700.0,3,4031.0,scheduled,selected_by_knapsack,expense
+2025-11-27,Apple Music,-120.0,5,3911.0,scheduled,selected_by_knapsack,expense
+2025-11-29,Apple Theft and Loss Coverage,-100.0,5,3811.0,scheduled,selected_by_knapsack,expense

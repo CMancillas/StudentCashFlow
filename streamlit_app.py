@@ -28,9 +28,9 @@ from app.summarize import generate_summary as generate_deterministic_summary
 from app.payment_automation import automate_payments_with_model
 from app.ingest_csv import load_transactions_from_csv
 
-st.set_page_config(page_title="Student Cashflow Agent", layout="wide")
+st.set_page_config(page_title="Student Cashflow", layout="wide")
 
-st.title("Student Cashflow Agent")
+st.title("Student Cashflow")
 
 if "uploaded_df" not in st.session_state:
     st.session_state["uploaded_df"] = None
@@ -93,7 +93,6 @@ if uploaded_csv is not None and st.session_state["show_preview"]:
 # ---- Load & Normalize
 if load_btn:
     try:
-        # 1. Origen de datos: PRIORIDAD al CSV actual
         if uploaded_csv is not None:
             uploaded_csv.seek(0)
             df_raw = load_transactions_from_csv(uploaded_csv)
@@ -104,27 +103,22 @@ if load_btn:
             st.error("Please upload a CSV file with columns: type, description, amount, date, priority")
             st.stop()
 
-        # 2. Clasificación
         if use_llm_classification:
             from app.classify_llm import classify_with_llm
             df_cls = classify_with_llm(df_raw)
         else:
             df_cls = classify_transactions(df_raw)
 
-        # 3. Normalizar índice + id
         df_cls = df_cls.reset_index(drop=True)
         if "id" in df_cls.columns:
             df_cls = df_cls.drop(columns=["id"])
         df_cls.insert(0, "id", range(1, len(df_cls) + 1))
 
-        # 4. Asegurar priority numérico
         df_cls["priority"] = pd.to_numeric(df_cls["priority"], errors="coerce")
 
-        # 5. Guardar df normalizado y ocultar preview crudo
         st.session_state["df_cls"] = df_cls
         st.session_state["show_preview"] = False
 
-        # 6. Start balance = suma de amount con priority == 0
         mask_p0 = df_cls["priority"] == 0
         start_balance = float(df_cls.loc[mask_p0, "amount"].sum())
         st.session_state["total_balance"] = start_balance
@@ -132,7 +126,6 @@ if load_btn:
         st.session_state["start_balance"] = start_balance
         st.session_state["min_buffer"] = start_balance * 0.30
 
-        # 7. UI
         with norm_ph:
             st.markdown(
                 f"""
@@ -238,9 +231,7 @@ if plan_btn:
                 unsafe_allow_html=True,
             )
 
-        
-
-            
+                    
             forecast_df, plan_df = build_optimized_forecast_and_plan(
                 df_cls,
                 start_balance,
@@ -249,16 +240,13 @@ if plan_btn:
             )
             
 
-            # --- Save Outputs ---
             out_dir = Path("outputs")
             out_dir.mkdir(parents=True, exist_ok=True)
             forecast_df.to_csv(out_dir / "forecast.csv", index=False)
             plan_df.to_csv(out_dir / "plan.csv", index=False)
 
-            # --- Two-column Layout ---
             col1, col2 = st.columns([1, 1], gap="large")
 
-            # LEFT COLUMN - Forecast Visualization
             with col1:
                 st.subheader("📈 Balance Forecast")
                 st.line_chart(
@@ -272,7 +260,6 @@ if plan_btn:
                 )
 
 
-            # RIGHT COLUMN - Plan Visualization
             with col2:
                 forecast_df, plan_df = build_ml_forecast_and_plan(
                     df_cls,
@@ -295,25 +282,20 @@ if plan_btn:
             st.subheader("⏱️ Optimization Timeline")
 
             if "pay_on" in plan_df.columns and "status" in plan_df.columns:
-                # Asegurar que priority sea entero y limitar de 1 a 5
                 plan_df["priority"] = plan_df["priority"].astype(int).clip(lower=1, upper=5)
 
-                # Tamaño invertido: prioridad 1 = mayor tamaño, prioridad 5 = menor tamaño
                 max_size = 150  # tamaño para priority 1
                 min_size = 60   # tamaño para priority 5
 
                 def priority_to_size(p):
-                    # Invertimos el tamaño
                     return max_size - (p - 1) * (max_size - min_size) / 4  # 4 = 5-1
 
                 plan_df["size_priority"] = plan_df["priority"].apply(priority_to_size)
 
-                # Color map: solo gastos en rojo
                 color_scale = alt.Scale(
                     domain=["expense"], range=["#dc2626"]
                 )
 
-                # Puntos de transacciones
                 points = (
                     alt.Chart(plan_df)
                     .mark_circle(opacity=0.8)
@@ -333,7 +315,6 @@ if plan_btn:
                     )
                 )
 
-                # Línea de balance acumulado
                 balance_line = (
                     alt.Chart(plan_df)
                     .mark_line(color="#1f77b4", strokeWidth=2)
@@ -344,10 +325,8 @@ if plan_btn:
                     )
                 )
 
-                # Combinar puntos y línea
                 timeline_chart = points + balance_line
 
-                # Mostrar en Streamlit
                 st.altair_chart(timeline_chart.properties(height=350), use_container_width=True)
 
 
@@ -358,8 +337,6 @@ if plan_btn:
             )
 
 
-
-            # --- Save state ---
             st.session_state["show_preview"] = False
             st.success("✅ Saved outputs/forecast.csv and outputs/plan.csv")
 
@@ -392,7 +369,6 @@ if ai_btn:
         )
 
         with st.expander("AI-generated summary (expand to view)"):
-            # Limpia Markdown agresivo que pueda romper el estilo
             clean = (
                 text.replace("**", "")
                     .replace("*", "")

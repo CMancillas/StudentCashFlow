@@ -208,7 +208,6 @@ def forecast_balance_ml(
     daily_hist = build_daily_net_series(hist)
     model = train_delta_model(daily_hist, model_type=model_type)
 
-        # === DEBUG INFO ===
     print("🔍 DEBUG INFO (forecast_balance_ml)")
     print(f"Model trained: {model is not None}")
     print(f"Daily hist shape: {daily_hist.shape}")
@@ -267,30 +266,29 @@ def forecast_balance_ml(
 if __name__ == "__main__":
     import os
 
-    # === Demo / sanity check ===
-    print("🧠 Running standalone test for forecast_balance_ml...")
+    print("Running standalone test for forecast_balance_ml...")
 
-    # 1️⃣ Locate your CSV
+    # Locate your CSV
     csv_path = os.path.join("data", "transactions.csv")
     if not os.path.exists(csv_path):
-        raise FileNotFoundError(f"❌ CSV not found: {csv_path}")
+        raise FileNotFoundError(f"CSV not found: {csv_path}")
 
-    # 2️⃣ Load transaction data
+    # Load transaction data
     tx_history = pd.read_csv(csv_path)
-    print(f"✅ Loaded {len(tx_history)} transactions")
+    print(f"Loaded {len(tx_history)} transactions")
 
-    # 3️⃣ Basic cleanup
+    # Basic cleanup
     tx_history["date"] = pd.to_datetime(tx_history["date"]).dt.date
     tx_history["amount"] = pd.to_numeric(tx_history["amount"], errors="coerce").fillna(0.0)
 
-    # 4️⃣ Calculate start balance (priority == 0)
+    # Calculate start balance (priority == 0)
     if "priority" in tx_history.columns:
         start_balance = float(tx_history.loc[tx_history["priority"] == 0, "amount"].sum())
     else:
         start_balance = 5000.0  # fallback example
-    print(f"💰 Start balance: {start_balance:,.2f}")
+    print(f"Start balance: {start_balance:,.2f}")
 
-    # 5️⃣ Run the ML forecast
+    # Run the ML forecast
     forecast_df = forecast_balance_ml(
         tx_history=tx_history,
         start_balance=start_balance,
@@ -298,12 +296,12 @@ if __name__ == "__main__":
         model_type="rf"
     )
 
-    # 6️⃣ Display results
+    # Display results
     print("\n=== Forecast preview ===")
     print(forecast_df.head(10))
     print(f"\n📈 Final balance after {len(forecast_df)} days: {forecast_df.iloc[-1]['balance']:,.2f}")
 
-    # 7️⃣ Save forecast to file
+    # Save forecast to file
     out_path = "forecast_debug.csv"
     forecast_df.to_csv(out_path, index=False)
     print(f"✅ Forecast saved to: {out_path}")
