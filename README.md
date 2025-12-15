@@ -104,4 +104,3 @@ README.md                      # Documentation
 🧑‍💻 Author
 Carlos Mancillas
 Computer Science Student, University of Sonora
-AI/ML Internship Candidate @ Paystand
